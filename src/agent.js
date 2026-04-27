@@ -9,6 +9,7 @@ const {
   extractFromSource,
   isSourceDataComplete
 } = require("../utils/sourceValidator");
+const { sendMail } = require("../mailer");
 
 // TAVILY_API_KEY
 const { searchWeb } = require("./webSearch");
@@ -241,6 +242,8 @@ async function runAgent() {
   const failed = Object.values(results).filter(r => r?.error === "RATE_LIMITED").length;
  
   console.log(`\n✅ output.json updated`);
+  await sendMail();
+  console.log("📧 Mail sent");
   console.log(`📊 Summary: ${connectors.length - failed} succeeded, ${failed} rate-limited`);
 }
  
