@@ -15,31 +15,29 @@ const transporter = nodemailer.createTransport({
 });
 
 // Styles
-const thStyle = "padding:11px 16px; font-weight:600; white-space:nowrap;";
+const thStyle = "padding:11px 16px; font-weight:600; white-space:nowrap; font-family:'Inter';";
 const tdStyle =
-  "padding:10px 16px; border-top:1px solid #e8ecf0; color:#1a1a1a; vertical-align:middle; font-family:'Inter', sans-serif; font-weight:500;";
+  "padding:10px 16px; border-top:1px solid #e8ecf0; color:#1a1a1a; vertical-align:middle; font-family:'Inter'; font-weight:500;";
 
-// Confidence badge
+// Confidence badge (ONLY text color #1E6455)
 function getConfidenceBadge(confidence) {
   if (!confidence || confidence === "—") return "—";
 
   const map = {
-    CONFIRMED: { bg: "transparent", color: "#1E6455", label: "✅ Confirmed" },
-    HIGH_CONFIDENCE_PATTERN: { bg: "#d1ecf1", color: "#0c5460", label: "🔵 High" },
-    PREDICTED: { bg: "#fff3cd", color: "#856404", label: "🟡 Predicted" },
-    LOW_CONFIDENCE: { bg: "#f8d7da", color: "#721c24", label: "🔴 Low" },
+    CONFIRMED: { color: "#1E6455", label: "Confirmed" },
+    HIGH_CONFIDENCE_PATTERN: { color: "#0c5460", label: "High" },
+    PREDICTED: { color: "#856404", label: "Predicted" },
+    LOW_CONFIDENCE: { color: "#721c24", label: "Low" },
   };
 
-  const style = map[confidence] || { bg: "#e2e3e5", color: "#383d41", label: confidence };
+  const style = map[confidence] || { color: "#383d41", label: confidence };
 
   return `<span style="
-    background:${style.bg};
     color:${style.color};
-    padding:2px 8px;
-    border-radius:10px;
-    font-size:11px;
+    font-size:13px;
     font-weight:600;
     white-space:nowrap;
+    font-family:'Inter';
   ">${style.label}</span>`;
 }
 
@@ -74,9 +72,9 @@ function formatDataAsHtml(data) {
           <td style="${tdStyle} font-weight:700;">${productName}</td>
           <td style="${tdStyle} font-size:13px;">${product.currentVersion || "—"}</td>
           <td style="${tdStyle} font-size:13px;">${sandboxDisplay}</td>
-          <td style="${tdStyle} text-align:center;">${previewDate}</td>
-          <td style="${tdStyle} text-align:center; font-weight:600; color:#0078d4;">${nextGA}</td>
-          <td style="${tdStyle} text-align:center;">${getConfidenceBadge(product.confidence)}</td>
+          <td style="${tdStyle} font-size:13px; text-align:center;">${previewDate}</td>
+          <td style="${tdStyle} font-size:13px; text-align:center; font-weight:600; color:#0078d4;">${nextGA}</td>
+          <td style="${tdStyle} font-size:13px; text-align:center;">${getConfidenceBadge(product.confidence)}</td>
         </tr>`;
     })
     .join("");
@@ -93,7 +91,7 @@ function formatDataAsHtml(data) {
   th, td { padding:8px !important; }
 }
 
-/* DARK MODE */
+/* Dark mode */
 @media (prefers-color-scheme: dark) {
   body { background:#0f172a !important; }
 
@@ -101,8 +99,6 @@ function formatDataAsHtml(data) {
     background:#111827 !important;
     color:#e5e7eb !important;
   }
-
-  table { border-color:#374151 !important; }
 
   th {
     background:#1f2937 !important;
@@ -131,12 +127,13 @@ function formatDataAsHtml(data) {
   margin:0;
   background:#ffffff;
   border-radius:0;
-  overflow:hidden;
 ">
 
 <!-- Header -->
 <div style="padding:20px 16px;">
-  <h1 style="margin:0; font-size:20px;">📦 Vendor Report</h1>
+  <h1 style="margin:0; font-size:20px;">
+    Vendor Report
+  </h1>
   <p style="margin:6px 0 0; color:#31479E; font-size:13px;">
     Last Updated: ${data.lastUpdated} | Auto-generated weekly report
   </p>
