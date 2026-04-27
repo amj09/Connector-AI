@@ -2,7 +2,6 @@ require("dotenv").config();
 const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
-const cron = require("node-cron");
 
 // Create transporter
 const transporter = nodemailer.createTransport({
@@ -15,41 +14,36 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// ─────────────────────────────────────────────
-// Shared cell styles
-// ─────────────────────────────────────────────
-const thStyle = "padding:11px 16px; font-weight:600; white-space:nowrap; font-family:'Inter';";
+// Styles
+const thStyle = "padding:11px 16px; font-weight:600; white-space:nowrap;";
 const tdStyle =
-  "padding:10px 16px; border-top:1px solid #e8ecf0; color:#1a1a1a; vertical-align:middle; font-family:'Inter'; font-weight:500;";
+  "padding:10px 16px; border-top:1px solid #e8ecf0; color:#1a1a1a; vertical-align:middle; font-family:'Inter', sans-serif; font-weight:500;";
 
-// ─────────────────────────────────────────────
-// Confidence badge helper
-// ─────────────────────────────────────────────
+// Confidence badge
 function getConfidenceBadge(confidence) {
   if (!confidence || confidence === "—") return "—";
 
   const map = {
-    CONFIRMED:               { color: "#1E6455", label: "Confirmed" },
-    HIGH_CONFIDENCE_PATTERN: { color: "#0c5460", label: "High" },
-    PREDICTED:               { color: "#856404", label: "Predicted" },
-    LOW_CONFIDENCE:          { color: "#721c24", label: "Low" },
+    CONFIRMED: { bg: "transparent", color: "#1E6455", label: "✅ Confirmed" },
+    HIGH_CONFIDENCE_PATTERN: { bg: "#d1ecf1", color: "#0c5460", label: "🔵 High" },
+    PREDICTED: { bg: "#fff3cd", color: "#856404", label: "🟡 Predicted" },
+    LOW_CONFIDENCE: { bg: "#f8d7da", color: "#721c24", label: "🔴 Low" },
   };
 
   const style = map[confidence] || { bg: "#e2e3e5", color: "#383d41", label: confidence };
 
   return `<span style="
+    background:${style.bg};
     color:${style.color};
     padding:2px 8px;
-    font-size:13px;
+    border-radius:10px;
+    font-size:11px;
     font-weight:600;
     white-space:nowrap;
-    font-family:'Inter';
   ">${style.label}</span>`;
 }
 
-// ─────────────────────────────────────────────
-// Format output.json → single compact table
-// ─────────────────────────────────────────────
+// Format HTML
 function formatDataAsHtml(data) {
   const tableRows = Object.entries(data.data)
     .map(([productName, product], i) => {
@@ -77,12 +71,12 @@ function formatDataAsHtml(data) {
 
       return `
         <tr style="background:${rowBg};">
-          <td style="${tdStyle} font-weight:700; white-space:nowrap;">${productName}</td>
+          <td style="${tdStyle} font-weight:700;">${productName}</td>
           <td style="${tdStyle} font-size:13px;">${product.currentVersion || "—"}</td>
           <td style="${tdStyle} font-size:13px;">${sandboxDisplay}</td>
-          <td style="${tdStyle} font-size:13px; white-space:nowrap; text-align:center;">${previewDate}</td>
-          <td style="${tdStyle} font-size:13px; white-space:nowrap; text-align:center; font-weight:600; color:#0078d4;">${nextGA}</td>
-          <td style="${tdStyle} font-size:13px; text-align:center;">${getConfidenceBadge(product.confidence)}</td>
+          <td style="${tdStyle} text-align:center;">${previewDate}</td>
+          <td style="${tdStyle} text-align:center; font-weight:600; color:#0078d4;">${nextGA}</td>
+          <td style="${tdStyle} text-align:center;">${getConfidenceBadge(product.confidence)}</td>
         </tr>`;
     })
     .join("");
@@ -90,111 +84,123 @@ function formatDataAsHtml(data) {
   return `<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <style>
-    @media only screen and (max-width: 600px) {
-      table {
-        font-size:12px !important;
-      }
-      th, td {
-        padding:8px !important;
-      }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<style>
+@media only screen and (max-width: 600px) {
+  table { font-size:12px !important; }
+  th, td { padding:8px !important; }
+}
+
+/* DARK MODE */
+@media (prefers-color-scheme: dark) {
+  body { background:#0f172a !important; }
+
+  .container {
+    background:#111827 !important;
+    color:#e5e7eb !important;
+  }
+
+  table { border-color:#374151 !important; }
+
+  th {
+    background:#1f2937 !important;
+    color:#ffffff !important;
+  }
+
+  td {
+    background:#111827 !important;
+    color:#e5e7eb !important;
+    border-color:#374151 !important;
+  }
+
+  .footer {
+    background:#111827 !important;
+    color:#9ca3af !important;
+  }
+}
+</style>
 </head>
-<body style="margin:0; padding:0; background:#f0f2f5; font-family:Arial, sans-serif;">
-  <div style="
-    max-width:1050px;
-    margin:30px auto;
-    background:#ffffff;
-    border-radius:8px;
-    overflow:hidden;
-    box-shadow:0 2px 10px rgba(0,0,0,0.12);
-  ">
 
-    <!-- Header -->
-    <div style="
-      background:linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
-      padding:20px 32px;
+<body style="margin:0; padding:0; background:#ffffff;">
+
+<div class="container" style="
+  width:100%;
+  max-width:100%;
+  margin:0;
+  background:#ffffff;
+  border-radius:0;
+  overflow:hidden;
+">
+
+<!-- Header -->
+<div style="padding:20px 16px;">
+  <h1 style="margin:0; font-size:20px;">📦 Vendor Report</h1>
+  <p style="margin:6px 0 0; color:#31479E; font-size:13px;">
+    Last Updated: ${data.lastUpdated} | Auto-generated weekly report
+  </p>
+</div>
+
+<!-- Table -->
+<div style="padding:16px;">
+  <div style="overflow-x:auto;">
+    <table style="
+      width:100%;
+      border-collapse:collapse;
+      font-size:14px;
+      border:1px solid #d0d7de;
     ">
-      <h1 style="margin:0; color:#000000; font-size:20px; letter-spacing:0.3px;">
-        Vendor Release Details
-      </h1>
-      <p style="margin:6px 0 0; color:#31479E; font-size:13px;">
-        Last Updated: ${data.lastUpdated} &nbsp;|&nbsp; Auto-generated weekly report
-      </p>
-    </div>
-
-    <!-- Table -->
-    <div style="padding:24px 0px 32px 0px;">
-      <div style="overflow-x:auto; width:100%;">
-        <table style="
-          width:100%;
-          min-width:700px;
-          border-collapse:collapse;
-          font-family:Arial, sans-serif;
-          font-size:14px;
-          border:1px solid #d0d7de;
-          border-radius:6px;
-          overflow:hidden;
-        ">
-          <thead>
-            <tr style="background:#3785e0; color:#ffffff;">
-              <th style="${thStyle} text-align:left;">Product</th>
-              <th style="${thStyle} text-align:left;">Current Version</th>
-              <th style="${thStyle} text-align:left;">Sandbox Version</th>
-              <th style="${thStyle} text-align:center;">Preview Date</th>
-              <th style="${thStyle} text-align:center;">Next GA</th>
-              <th style="${thStyle} text-align:center;">Confidence</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${tableRows}
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Footer -->
-    <div style="
-      background:#f5f5f5;
-      border-top:1px solid #e0e0e0;
-      padding:14px 32px;
-      font-size:12px;
-      color:#97A3B6;
-      text-align:center;
-    ">
-      This report is auto-generated by the ERP Release Intelligence System. Do not reply to this email.
-    </div>
-
+      <thead>
+        <tr style="background:#3785e0; color:#ffffff;">
+          <th style="${thStyle} text-align:left;">Product</th>
+          <th style="${thStyle} text-align:left;">Current Version</th>
+          <th style="${thStyle} text-align:left;">Sandbox Version</th>
+          <th style="${thStyle} text-align:center;">Preview Date</th>
+          <th style="${thStyle} text-align:center;">Next GA</th>
+          <th style="${thStyle} text-align:center;">Confidence</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${tableRows}
+      </tbody>
+    </table>
   </div>
+</div>
+
+<!-- Footer -->
+<div class="footer" style="
+  padding:12px;
+  font-size:12px;
+  color:#97A3B6;
+  text-align:center;
+">
+  This report is auto-generated by the ERP Release Intelligence System. Do not reply to this email.
+</div>
+
+</div>
 </body>
 </html>`;
 }
 
-// ─────────────────────────────────────────────
 // Send mail
-// ─────────────────────────────────────────────
 async function sendMail() {
-  console.log("📧 Sending email...");
-
   const outputData = JSON.parse(
     fs.readFileSync(path.join(__dirname, "output.json"), "utf-8")
   );
 
   const mailOptions = {
     from: `"ERP Release System" <${process.env.OUTLOOK_USER}>`,
-    to: process.env.MAIL_TO.split(','),
+    to: process.env.MAIL_TO.split(","), // multiple users
     subject: `ERP Release Report — ${outputData.lastUpdated}`,
     html: formatDataAsHtml(outputData),
   };
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log("✅ Email sent successfully!", info.messageId);
+    console.log("✅ Email sent:", info.messageId);
   } catch (err) {
-    console.error("❌ Error sending email:", err.message);
+    console.error("❌ Error:", err.message);
   }
 }
 
