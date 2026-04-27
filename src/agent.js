@@ -242,8 +242,10 @@ async function runAgent() {
   const failed = Object.values(results).filter(r => r?.error === "RATE_LIMITED").length;
  
   console.log(`\n✅ output.json updated`);
-  await sendMail();
-  console.log("📧 Mail sent");
+  sendMail().catch(err => {
+    console.error("❌ Mail failed:", err.message);
+  });
+  console.log("📧 Mail triggered");
   console.log(`📊 Summary: ${connectors.length - failed} succeeded, ${failed} rate-limited`);
 }
  
