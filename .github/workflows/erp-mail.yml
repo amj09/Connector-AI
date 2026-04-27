@@ -1,7 +1,7 @@
 name: ERP Mail Automation
 
 on:
-  workflow_dispatch:   # Only manual trigger (no cron)
+  workflow_dispatch
 
 jobs:
   run-script:
@@ -14,7 +14,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20   # ✅ FIXED
 
       - name: Install dependencies
         run: npm install
