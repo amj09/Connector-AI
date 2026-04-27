@@ -1,0 +1,114 @@
+{
+  "lastUpdated": "2026-04-27",
+  "data": {
+    "IFS Cloud": {
+      "currentVersion": "25R2 — IFS Cloud",
+      "sandboxVersion": "26R1 — IFS Cloud",
+      "nextReleasePreviewAvailabilityDate": "01-04-2026",
+      "nextGAReleaseDate": "01-05-2026",
+      "confidence": "CONFIRMED",
+      "sourceUrl": "https://www.ifs.com/en/ifs-cloud/releases",
+      "sourceUrls": [
+        "https://www.ifs.com/en/ifs-cloud/releases",
+        "https://community.ifs.com/upgrades-updates-81/release-notes-for-ifs-cloud-57014"
+      ],
+      "notes": "IFS — IFS Cloud semiannual releases (R1 May, R2 November; public cadence). | Release hub: https://www.ifs.com/en/ifs-cloud/releases | Community thread: https://community.ifs.com/upgrades-updates-81/release-notes-for-ifs-cloud-57014 | Tech docs (current): https://docs.ifs.com/techdocs/25r2/010_overview/010_fundamentals | Tech docs (next): https://docs.ifs.com/techdocs/26r1/010_overview/010_fundamentals",
+      "dataSource": "official"
+    },
+    "Microsoft Dynamics 365 Finance & Operations": {
+      "currentVersion": "CY26Q2: 10.0.47*",
+      "sandboxVersion": "CY26Q3: 10.0.48",
+      "nextReleasePreviewAvailabilityDate": "24-04-2026",
+      "nextGAReleaseDate": "05-06-2026",
+      "confidence": "CONFIRMED",
+      "sourceUrl": "https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/get-started/public-preview-releases",
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/get-started/public-preview-releases"
+      ],
+      "notes": "GA = General availability (self-update). Preview = Preview availability column. Microsoft Learn — Finance & Operations service update schedule",
+      "dataSource": "official"
+    },
+    "Microsoft Dynamics 365 CRM": {
+      "currentVersion": "2026 wave 1 (DB: 9.2.26033)",
+      "sandboxVersion": "2026 wave 2",
+      "nextReleasePreviewAvailabilityDate": "Mid August",
+      "nextGAReleaseDate": "09-10-2026 to 12-10-2026",
+      "confidence": "CONFIRMED",
+      "sourceUrl": "https://learn.microsoft.com/en-us/power-platform/admin/general-availability-deployment",
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/power-platform/admin/general-availability-deployment"
+      ],
+      "notes": "Schedule: First release row drives wave timing vs today. Date fields use full regional ranges for Europe when present. Preview / early access: sandbox table (typical early access starts) when present; else regional early-access dates; else approximate month before next GA. Microsoft Learn — general availability deployment | Europe — wave 1 GA: April 10-13, 2026 | Europe — wave 2 GA: October 9-12, 2026 | Sandbox testing — typical early access: Mid August",
+      "dataSource": "official"
+    },
+    "Microsoft Dynamics 365 Business Central": {
+      "currentVersion": "28.0 — Business Central (Microsoft Learn whatsnew)",
+      "sandboxVersion": "NOT_FOUND",
+      "nextReleasePreviewAvailabilityDate": "NOT_FOUND",
+      "nextGAReleaseDate": "NOT_FOUND",
+      "confidence": "CONFIRMED",
+      "sourceUrl": "https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/whatsnew/overview",
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/whatsnew/overview",
+        "https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/whatsnew/whatsnew-update-28-0"
+      ],
+      "notes": "Microsoft Learn — Business Central overview; optional dynamic whatsnew-update-{major}-{minor} probe for latest minor",
+      "dataSource": "official"
+    },
+    "Salesforce": {
+      "currentVersion": "Salesforce Spring '26",
+      "sandboxVersion": "Salesforce Summer '26",
+      "nextReleasePreviewAvailabilityDate": "08-05-2026",
+      "nextGAReleaseDate": "15-05-2026 to 13-06-2026",
+      "confidence": "CONFIRMED",
+      "sourceUrl": "https://help.salesforce.com/s/articleView?id=service.fs_updates.htm&type=5",
+      "sourceUrls": [
+        "https://help.salesforce.com/s/articleView?id=service.fs_updates.htm&type=5",
+        "https://admin.salesforce.com/blog/2025/admin-spring-26-release-dates-countdown",
+        "https://admin.salesforce.com/blog/2026/admin-summer-26-release-countdown"
+      ],
+      "notes": "Current post: https://admin.salesforce.com/blog/2025/admin-spring-26-release-dates-countdown | Next post: https://admin.salesforce.com/blog/2026/admin-summer-26-release-countdown. Field Service updates (Help): https://help.salesforce.com/s/articleView?id=service.fs_updates.htm&type=5",
+      "dataSource": "official"
+    },
+    "Acumatica": {
+      "currentVersion": "Acumatica 2026 R1",
+      "sandboxVersion": "Acumatica 2026 R2",
+      "nextReleasePreviewAvailabilityDate": "19-09-2026",
+      "nextGAReleaseDate": "19-09-2026",
+      "confidence": "CONFIRMED",
+      "sourceUrl": "https://www.acumatica.com/cloud-erp-software/acumatica-release-news/",
+      "sourceUrls": [
+        "https://www.acumatica.com/cloud-erp-software/acumatica-release-news/",
+        "https://www.acumatica.com/cloud-erp-software/2026-r1/"
+      ],
+      "notes": "News hub: https://www.acumatica.com/cloud-erp-software/acumatica-release-news/. Press URL pattern: https://www.acumatica.com/cloud-erp-software/{year}-r{r}/.",
+      "dataSource": "official"
+    },
+    "Oracle ERP Cloud": {
+      "currentVersion": "Oracle ERP Cloud 26A",
+      "sandboxVersion": "Oracle ERP Cloud 26B",
+      "nextReleasePreviewAvailabilityDate": "19-05-2026",
+      "nextGAReleaseDate": "18-05-2026",
+      "confidence": "CONFIRMED",
+      "sourceUrl": "https://docs.oracle.com/en/cloud/saas/readiness/news.html",
+      "sourceUrls": [
+        "https://docs.oracle.com/en/cloud/saas/readiness/news.html"
+      ],
+      "notes": "26B confirmed on Oracle schedule. Stage pods ≈ 1st of Invalid Date; production ≈ 15th.",
+      "dataSource": "official"
+    },
+    "SAP S/4HANA": {
+      "currentVersion": "SAP S/4HANA Cloud 2602",
+      "sandboxVersion": "SAP S/4HANA Cloud 2608",
+      "nextReleasePreviewAvailabilityDate": "12-08-2026",
+      "nextGAReleaseDate": "14-08-2026",
+      "confidence": "CONFIRMED",
+      "sourceUrl": "https://help.sap.com",
+      "sourceUrls": [
+        "https://help.sap.com"
+      ],
+      "notes": "Derived from SAP S/4HANA Cloud release calendar. Preview = Test (T); GA = Development/Production (D/P).",
+      "dataSource": "official"
+    }
+  }
+}
