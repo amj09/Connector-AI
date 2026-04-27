@@ -1,0 +1,29 @@
+name: Weekly Mail Job
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'   # Monday 9 AM
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Project
+        run: npm start
+        env:
+          OUTLOOK_USER: ${{ secrets.OUTLOOK_USER }}
+          OUTLOOK_PASS: ${{ secrets.OUTLOOK_PASS }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}

@@ -96,16 +96,6 @@ function formatDataAsHtml(data) {
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <style>
-    @media only screen and (max-width: 600px) {
-      table {
-        font-size:12px !important;
-      }
-      th, td {
-        padding:8px !important;
-      }
-    }
-  </style>
 </head>
 <body style="margin:0; padding:0; background:#f0f2f5; font-family:Arial, sans-serif;">
   <div style="
@@ -120,6 +110,7 @@ function formatDataAsHtml(data) {
     <!-- Header -->
     <div style="
       background:linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+      padding:24px 32px;
     ">
       <h1 style="margin:0; color:#000000; font-size:20px; letter-spacing:0.3px;">
         📦 Connector Version Report
@@ -130,34 +121,30 @@ function formatDataAsHtml(data) {
     </div>
 
     <!-- Table -->
-    <div style="padding:24px 0px 32px 0px;">
-      <div style="overflow-x:auto; width:100%;">
-        <table style="
-          width:100%;
-          min-width:700px;
-            width:100%;
-            border-collapse:collapse;
-            font-family:Arial, sans-serif;
-            font-size:14px;
-            border:1px solid #d0d7de;
-            border-radius:6px;
-            overflow:hidden;
-          ">
-            <thead>
-              <tr style="background:#0078d4; color:#ffffff;">
-                <th style="${thStyle} text-align:left;">Product</th>
-                <th style="${thStyle} text-align:left;">Current Version</th>
-                <th style="${thStyle} text-align:left;">Sandbox Version</th>
-                <th style="${thStyle} text-align:center;">Preview Date</th>
-                <th style="${thStyle} text-align:center;">Next GA</th>
-                <th style="${thStyle} text-align:center;">Confidence</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${tableRows}
-            </tbody>
-        </table>
-      </div>
+    <div style="padding:24px 32px;">
+      <table style="
+        width:100%;
+        border-collapse:collapse;
+        font-family:Arial, sans-serif;
+        font-size:14px;
+        border:1px solid #d0d7de;
+        border-radius:6px;
+        overflow:hidden;
+      ">
+        <thead>
+          <tr style="background:#0078d4; color:#ffffff;">
+            <th style="${thStyle} text-align:left;">Product</th>
+            <th style="${thStyle} text-align:left;">Current Version</th>
+            <th style="${thStyle} text-align:left;">Sandbox Version</th>
+            <th style="${thStyle} text-align:center;">Preview Date</th>
+            <th style="${thStyle} text-align:center;">Next GA</th>
+            <th style="${thStyle} text-align:center;">Confidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${tableRows}
+        </tbody>
+      </table>
     </div>
 
     <!-- Footer -->
@@ -202,10 +189,10 @@ async function sendMail() {
   }
 }
 
-sendMail();
+// sendMail();
 
 // Schedule: Every Monday at 9:00 AM
-// cron.schedule("0 9 * * 1", () => {
-//   runAgent();
-//   sendMail();
-// });
+cron.schedule("0 9 * * 1", () => {
+  runAgent();
+  sendMail();
+});
