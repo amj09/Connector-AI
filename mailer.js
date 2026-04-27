@@ -29,10 +29,10 @@ function getConfidenceBadge(confidence) {
   if (!confidence || confidence === "—") return "—";
 
   const map = {
-    CONFIRMED:               { bg: "transparent", color: "#1E6455", label: "Confirmed" },
-    HIGH_CONFIDENCE_PATTERN: { bg: "#d1ecf1", color: "#0c5460", label: "High" },
-    PREDICTED:               { bg: "#fff3cd", color: "#856404", label: "Predicted" },
-    LOW_CONFIDENCE:          { bg: "#f8d7da", color: "#721c24", label: "Low" },
+    CONFIRMED:               { color: "#1E6455", label: "Confirmed" },
+    HIGH_CONFIDENCE_PATTERN: { color: "#0c5460", label: "High" },
+    PREDICTED:               { color: "#856404", label: "Predicted" },
+    LOW_CONFIDENCE:          { color: "#721c24", label: "Low" },
   };
 
   const style = map[confidence] || { bg: "#e2e3e5", color: "#383d41", label: confidence };
