@@ -1,7 +1,9 @@
 name: ERP Mail Automation
 
 on:
-  workflow_dispatch
+  schedule:
+    - cron: "30 8 * * 1"   # ✅ Every Monday 2 PM IST
+  workflow_dispatch:
 
 jobs:
   run-script:
@@ -14,7 +16,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 20   # ✅ FIXED
+          node-version: 20
 
       - name: Install dependencies
         run: npm install
