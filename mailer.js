@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
 // ─────────────────────────────────────────────
 // Shared cell styles
 // ─────────────────────────────────────────────
-const thStyle = "padding:11px 16px; font-weight:600; white-space:nowrap;";
+const thStyle = "padding:11px 16px; font-weight:600; white-space:nowrap; font-family:'Inter';";
 const tdStyle =
   "padding:10px 16px; border-top:1px solid #e8ecf0; color:#1a1a1a; vertical-align:middle; font-family:'Inter'; font-weight:500;";
 
@@ -81,9 +81,9 @@ function formatDataAsHtml(data) {
           <td style="${tdStyle} font-weight:700; white-space:nowrap;">${productName}</td>
           <td style="${tdStyle} font-size:13px;">${product.currentVersion || "—"}</td>
           <td style="${tdStyle} font-size:13px;">${sandboxDisplay}</td>
-          <td style="${tdStyle} white-space:nowrap; text-align:center;">${previewDate}</td>
-          <td style="${tdStyle} white-space:nowrap; text-align:center; font-weight:600; color:#0078d4;">${nextGA}</td>
-          <td style="${tdStyle} text-align:center;">${getConfidenceBadge(product.confidence)}</td>
+          <td style="${tdStyle} font-size:13px; white-space:nowrap; text-align:center;">${previewDate}</td>
+          <td style="${tdStyle} font-size:13px; white-space:nowrap; text-align:center; font-weight:600; color:#0078d4;">${nextGA}</td>
+          <td style="${tdStyle} font-size:13px; text-align:center;">${getConfidenceBadge(product.confidence)}</td>
         </tr>`;
     })
     .join("");
