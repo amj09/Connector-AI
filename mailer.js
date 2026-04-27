@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
 // ─────────────────────────────────────────────
 const thStyle = "padding:11px 16px; font-weight:600; white-space:nowrap;";
 const tdStyle =
-  "padding:10px 16px; border-top:1px solid #e8ecf0; color:#1a1a1a; vertical-align:middle; font-family:'Inter', sans-serif; font-weight:500;";
+  "padding:10px 16px; border-top:1px solid #e8ecf0; color:#1a1a1a; vertical-align:middle; font-family:'Inter'; font-weight:500;";
 
 // ─────────────────────────────────────────────
 // Confidence badge helper
@@ -29,7 +29,7 @@ function getConfidenceBadge(confidence) {
   if (!confidence || confidence === "—") return "—";
 
   const map = {
-    CONFIRMED:               { bg: "#d4edda", color: "#1E6455", label: "✅ Confirmed" },
+    CONFIRMED:               { bg: "transparent", color: "#1E6455", label: "✅ Confirmed" },
     HIGH_CONFIDENCE_PATTERN: { bg: "#d1ecf1", color: "#0c5460", label: "🔵 High" },
     PREDICTED:               { bg: "#fff3cd", color: "#856404", label: "🟡 Predicted" },
     LOW_CONFIDENCE:          { bg: "#f8d7da", color: "#721c24", label: "🔴 Low" },
