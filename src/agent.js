@@ -242,9 +242,12 @@ async function runAgent() {
   const failed = Object.values(results).filter(r => r?.error === "RATE_LIMITED").length;
  
   console.log(`\n✅ output.json updated`);
-  sendMail().catch(err => {
+ try {
+    await sendMail();   // ✅ wait for email
+    console.log("📧 Mail sent");
+  } catch (err) {
     console.error("❌ Mail failed:", err.message);
-  });
+  }
   console.log("📧 Mail triggered");
   console.log(`📊 Summary: ${connectors.length - failed} succeeded, ${failed} rate-limited`);
 }
