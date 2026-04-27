@@ -19,7 +19,7 @@ const thStyle = "padding:11px 16px; font-weight:600; white-space:nowrap; font-fa
 const tdStyle =
   "padding:10px 16px; border-top:1px solid #e8ecf0; color:#1a1a1a; vertical-align:middle; font-family:'Inter'; font-weight:500;";
 
-// Confidence badge (ONLY text color #1E6455)
+// Confidence badge
 function getConfidenceBadge(confidence) {
   if (!confidence || confidence === "—") return "—";
 
@@ -91,29 +91,33 @@ function formatDataAsHtml(data) {
   th, td { padding:8px !important; }
 }
 
-/* Dark mode */
+/* DARK MODE (pure black) */
 @media (prefers-color-scheme: dark) {
-  body { background:#0f172a !important; }
+  body { background:#000000 !important; }
 
   .container {
-    background:#111827 !important;
-    color:#e5e7eb !important;
+    background:#000000 !important;
+    color:#ffffff !important;
+  }
+
+  table {
+    border-color:#333333 !important;
   }
 
   th {
-    background:#1f2937 !important;
+    background:#3785e0 !important;
     color:#ffffff !important;
   }
 
   td {
-    background:#111827 !important;
-    color:#e5e7eb !important;
-    border-color:#374151 !important;
+    background:#000000 !important;
+    color:#ffffff !important;
+    border-color:#333333 !important;
   }
 
   .footer {
-    background:#111827 !important;
-    color:#9ca3af !important;
+    background:#000000 !important;
+    color:#97A3B6 !important;
   }
 }
 </style>
@@ -126,7 +130,6 @@ function formatDataAsHtml(data) {
   max-width:100%;
   margin:0;
   background:#ffffff;
-  border-radius:0;
 ">
 
 <!-- Header -->
@@ -188,7 +191,7 @@ async function sendMail() {
 
   const mailOptions = {
     from: `"ERP Release System" <${process.env.OUTLOOK_USER}>`,
-    to: process.env.MAIL_TO.split(","), // multiple users
+    to: process.env.MAIL_TO.split(","),
     subject: `ERP Release Report — ${outputData.lastUpdated}`,
     html: formatDataAsHtml(outputData),
   };
