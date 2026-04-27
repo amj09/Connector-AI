@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
 // ─────────────────────────────────────────────
 const thStyle = "padding:11px 16px; font-weight:600; white-space:nowrap;";
 const tdStyle =
-  "padding:10px 16px; border-top:1px solid #e8ecf0; color:#1a1a1a; vertical-align:middle;";
+  "padding:10px 16px; border-top:1px solid #e8ecf0; color:#1a1a1a; vertical-align:middle; font-family:'Inter', sans-serif; font-weight:500;";
 
 // ─────────────────────────────────────────────
 // Confidence badge helper
@@ -29,7 +29,7 @@ function getConfidenceBadge(confidence) {
   if (!confidence || confidence === "—") return "—";
 
   const map = {
-    CONFIRMED:               { bg: "#d4edda", color: "#155724", label: "✅ Confirmed" },
+    CONFIRMED:               { bg: "#d4edda", color: "#1E6455", label: "✅ Confirmed" },
     HIGH_CONFIDENCE_PATTERN: { bg: "#d1ecf1", color: "#0c5460", label: "🔵 High" },
     PREDICTED:               { bg: "#fff3cd", color: "#856404", label: "🟡 Predicted" },
     LOW_CONFIDENCE:          { bg: "#f8d7da", color: "#721c24", label: "🔴 Low" },
@@ -56,11 +56,10 @@ function formatDataAsHtml(data) {
     .map(([productName, product], i) => {
       const rowBg = i % 2 === 0 ? "#ffffff" : "#f7f9fc";
 
-      // Error row
       if (product?.error) {
         return `
           <tr style="background:${rowBg};">
-            <td style="${tdStyle} font-weight:600;">${productName}</td>
+            <td style="${tdStyle} font-weight:700;">${productName}</td>
             <td colspan="5" style="${tdStyle} color:#cc0000;">⚠️ ${product.error}</td>
           </tr>`;
       }
@@ -70,8 +69,6 @@ function formatDataAsHtml(data) {
           ? `<span style="color:#999; font-style:italic;">NOT_FOUND</span>`
           : product.sandboxVersion;
 
-      // "Preview Date" = releaseDate of the sandbox (next release's preview),
-      // fall back to nextReleaseDate when sandbox is unknown
       const previewDate =
         !product.sandboxVersion || product.sandboxVersion === "NOT_FOUND"
           ? `<span style="color:#999;">NOT_FOUND</span>`
@@ -81,9 +78,9 @@ function formatDataAsHtml(data) {
 
       return `
         <tr style="background:${rowBg};">
-          <td style="${tdStyle} font-weight:600; white-space:nowrap;">${productName}</td>
-          <td style="${tdStyle} font-family:'Courier New',monospace; font-size:13px;">${product.currentVersion || "—"}</td>
-          <td style="${tdStyle} font-family:'Courier New',monospace; font-size:13px;">${sandboxDisplay}</td>
+          <td style="${tdStyle} font-weight:700; white-space:nowrap;">${productName}</td>
+          <td style="${tdStyle} font-size:13px;">${product.currentVersion || "—"}</td>
+          <td style="${tdStyle} font-size:13px;">${sandboxDisplay}</td>
           <td style="${tdStyle} white-space:nowrap; text-align:center;">${previewDate}</td>
           <td style="${tdStyle} white-space:nowrap; text-align:center; font-weight:600; color:#0078d4;">${nextGA}</td>
           <td style="${tdStyle} text-align:center;">${getConfidenceBadge(product.confidence)}</td>
@@ -120,11 +117,12 @@ function formatDataAsHtml(data) {
     <!-- Header -->
     <div style="
       background:linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+      padding:20px 32px;
     ">
       <h1 style="margin:0; color:#000000; font-size:20px; letter-spacing:0.3px;">
-        📦 Connector Version Report
+        📦 Vendor Release Details
       </h1>
-      <p style="margin:6px 0 0; color:#0078d4; font-size:13px;">
+      <p style="margin:6px 0 0; color:#31479E; font-size:13px;">
         Last Updated: ${data.lastUpdated} &nbsp;|&nbsp; Auto-generated weekly report
       </p>
     </div>
@@ -135,27 +133,26 @@ function formatDataAsHtml(data) {
         <table style="
           width:100%;
           min-width:700px;
-            width:100%;
-            border-collapse:collapse;
-            font-family:Arial, sans-serif;
-            font-size:14px;
-            border:1px solid #d0d7de;
-            border-radius:6px;
-            overflow:hidden;
-          ">
-            <thead>
-              <tr style="background:#0078d4; color:#ffffff;">
-                <th style="${thStyle} text-align:left;">Product</th>
-                <th style="${thStyle} text-align:left;">Current Version</th>
-                <th style="${thStyle} text-align:left;">Sandbox Version</th>
-                <th style="${thStyle} text-align:center;">Preview Date</th>
-                <th style="${thStyle} text-align:center;">Next GA</th>
-                <th style="${thStyle} text-align:center;">Confidence</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${tableRows}
-            </tbody>
+          border-collapse:collapse;
+          font-family:Arial, sans-serif;
+          font-size:14px;
+          border:1px solid #d0d7de;
+          border-radius:6px;
+          overflow:hidden;
+        ">
+          <thead>
+            <tr style="background:#3785e0; color:#ffffff;">
+              <th style="${thStyle} text-align:left;">Product</th>
+              <th style="${thStyle} text-align:left;">Current Version</th>
+              <th style="${thStyle} text-align:left;">Sandbox Version</th>
+              <th style="${thStyle} text-align:center;">Preview Date</th>
+              <th style="${thStyle} text-align:center;">Next GA</th>
+              <th style="${thStyle} text-align:center;">Confidence</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tableRows}
+          </tbody>
         </table>
       </div>
     </div>
@@ -166,7 +163,7 @@ function formatDataAsHtml(data) {
       border-top:1px solid #e0e0e0;
       padding:14px 32px;
       font-size:12px;
-      color:#888;
+      color:#97A3B6;
       text-align:center;
     ">
       This report is auto-generated by the ERP Release Intelligence System. Do not reply to this email.
@@ -202,11 +199,4 @@ async function sendMail() {
   }
 }
 
-// sendMail();
 module.exports = { sendMail };
-
-// Schedule: Every Monday at 9:00 AM
-// cron.schedule("0 9 * * 1", () => {
-//   runAgent();
-//   sendMail();
-// });
