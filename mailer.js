@@ -185,7 +185,7 @@ async function sendMail() {
 
   const mailOptions = {
     from: `"ERP Release System" <${process.env.OUTLOOK_USER}>`,
-    to: process.env.MAIL_TO,
+    to: process.env.MAIL_TO.split(','),
     subject: `ERP Release Report — ${outputData.lastUpdated}`,
     html: formatDataAsHtml(outputData),
   };
