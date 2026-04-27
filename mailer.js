@@ -119,7 +119,7 @@ function formatDataAsHtml(data) {
       padding:20px 32px;
     ">
       <h1 style="margin:0; color:#000000; font-size:20px; letter-spacing:0.3px;">
-        📦 Vendor Release Details
+        Vendor Release Details
       </h1>
       <p style="margin:6px 0 0; color:#31479E; font-size:13px;">
         Last Updated: ${data.lastUpdated} &nbsp;|&nbsp; Auto-generated weekly report
