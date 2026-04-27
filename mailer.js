@@ -119,6 +119,9 @@ function formatDataAsHtml(data) {
     background:#000000 !important;
     color:#97A3B6 !important;
   }
+  .last-updated {
+    color:#cbd5f5 !important;
+  }
 }
 </style>
 </head>
@@ -135,9 +138,9 @@ function formatDataAsHtml(data) {
 <!-- Header -->
 <div style="padding:20px 16px;">
   <h1 style="margin:0; font-size:20px;">
-    Vendor Report
+    Vendor Release Report
   </h1>
-  <p style="margin:6px 0 0; color:#31479E; font-size:13px;">
+  <p class="last-updated" style="margin:6px 0 0; color:#31479E; font-size:13px;">
     Last Updated: ${data.lastUpdated} | Auto-generated weekly report
   </p>
 </div>
@@ -153,7 +156,7 @@ function formatDataAsHtml(data) {
     ">
       <thead>
         <tr style="background:#3785e0; color:#ffffff;">
-          <th style="${thStyle} text-align:left;">Product</th>
+          <th style="${thStyle} text-align:left;">Product Name</th>
           <th style="${thStyle} text-align:left;">Current Version</th>
           <th style="${thStyle} text-align:left;">Sandbox Version</th>
           <th style="${thStyle} text-align:center;">Preview Date</th>
