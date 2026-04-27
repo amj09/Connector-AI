@@ -38,13 +38,12 @@ function getConfidenceBadge(confidence) {
   const style = map[confidence] || { bg: "#e2e3e5", color: "#383d41", label: confidence };
 
   return `<span style="
-    background:${style.bg};
     color:${style.color};
     padding:2px 8px;
-    border-radius:10px;
-    font-size:11px;
+    font-size:13px;
     font-weight:600;
     white-space:nowrap;
+    font-family:'Inter';
   ">${style.label}</span>`;
 }
 
