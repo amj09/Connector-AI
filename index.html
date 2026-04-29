@@ -90,7 +90,7 @@ function toggleDark() {
 
 /* LOAD DATA */
 async function loadData() {
-  const res = await fetch("../output.json");
+  const res = await fetch("./output.json");
   const json = await res.json();
 
   globalProducts = Object.entries(json.data);
