@@ -2,7 +2,7 @@ name: ERP Mail Automation
 
 on:
   schedule:
-    - cron: "30 8 * * 1"   # ✅ Every Monday 2 PM IST
+    - cron: "30 8 29 4 *"   # ✅ Every Monday 2 PM IST
   workflow_dispatch:
 
 jobs:
