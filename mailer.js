@@ -5,12 +5,19 @@ const path = require("path");
 
 // Create transporter
 const transporter = nodemailer.createTransport({
+  /*
   host: "smtp.office365.com",
   port: 587,
   secure: false,
   auth: {
     user: process.env.OUTLOOK_USER,
     pass: process.env.OUTLOOK_PASS,
+  },
+  */
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS, // NOT your real password
   },
 });
 
@@ -192,19 +199,36 @@ async function sendMail() {
     fs.readFileSync(path.join(__dirname, "output.json"), "utf-8")
   );
 
+  const sent_to_mails = [
+    "aaz@clicklearn.com", 
+    "sam@clicklearn.com", 
+    "amj@clicklearn.com", 
+    "pod@clicklearn.com"
+  ];
+
   const mailOptions = {
+    /*
     from: `"ERP Release System" <${process.env.OUTLOOK_USER}>`,
     to: process.env.MAIL_TO.split(","),
+    subject: `ERP Release Report — ${outputData.lastUpdated}`,
+    html: formatDataAsHtml(outputData),
+    */
+
+    from: `"ERP Release System" <${process.env.GMAIL_USER}>`,
+    to: sent_to_mails.join(','),
     subject: `ERP Release Report — ${outputData.lastUpdated}`,
     html: formatDataAsHtml(outputData),
   };
 
   try {
     const info = await transporter.sendMail(mailOptions);
+    console.log('info: ', info);
     console.log("✅ Email sent:", info.messageId);
   } catch (err) {
     console.error("❌ Error:", err.message);
   }
 }
+
+// sendMail();
 
 module.exports = { sendMail };
