@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vendor Release Dashboard</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: "#3785e0",
+        brandDark: "#31479E",
+        greenLight: "#4B8377",
+        greenDark: "#1E6455"
+      }
+    }
+  }
+}
+</script>
+
+</head>
+
+<body class="bg-slate-100 text-slate-800 transition duration-300" id="body">
+
+<!-- HEADER -->
+<div class="max-w-7xl mx-auto px-4 pt-6 flex justify-between items-center">
+  <div>
+    <h1 id="title" class="text-2xl md:text-3xl font-bold text-brandDark">
+      📊 Vendor Release Dashboard
+    </h1>
+    <p id="subtitle" class="text-sm text-slate-500 mt-1">
+      Smart release tracking system
+    </p>
+  </div>
+
+  <button onclick="toggleDark()" class="px-3 py-2 bg-brandDark text-white rounded-lg text-sm">
+    🌙 Toggle
+  </button>
+</div>
+
+<!-- HERO -->
+<div class="max-w-7xl mx-auto px-4 mt-6">
+  <div class="bg-gradient-to-r from-[#31479E] via-[#2f5ec9] to-[#3785e0] text-white p-6 rounded-2xl shadow-lg">
+    <h2 class="text-lg font-semibold mb-1">🚀 Next Major Release</h2>
+    <p id="heroText">Loading...</p>
+  </div>
+</div>
+
+<!-- CARDS -->
+<div class="max-w-7xl mx-auto px-4 mt-6 pb-10">
+  <div id="cards" class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3"></div>
+</div>
+
+<script>
+let globalProducts = [];
+let isDark = false;
+
+/* DARK MODE */
+function toggleDark() {
+  const body = document.getElementById("body");
+  const title = document.getElementById("title");
+  const subtitle = document.getElementById("subtitle");
+
+  isDark = !isDark;
+
+  if (isDark) {
+    body.className = "bg-[#0b1b34] text-slate-200 transition";
+
+    title.classList.remove("text-brandDark");
+    title.classList.add("text-white");
+
+    subtitle.classList.remove("text-slate-500");
+    subtitle.classList.add("text-slate-300");
+  } else {
+    body.className = "bg-slate-100 text-slate-800 transition";
+
+    title.classList.remove("text-white");
+    title.classList.add("text-brandDark");
+
+    subtitle.classList.remove("text-slate-300");
+    subtitle.classList.add("text-slate-500");
+  }
+
+  renderCards(globalProducts);
+}
+
+/* LOAD DATA */
+async function loadData() {
+  const res = await fetch("../output.json");
+  const json = await res.json();
+
+  globalProducts = Object.entries(json.data);
+
+  renderHero(globalProducts);
+  renderCards(globalProducts);
+}
+
+/* DATE */
+function parseDate(dateStr) {
+  if (!dateStr || dateStr === "NOT_FOUND") return null;
+  if (dateStr.includes("to")) dateStr = dateStr.split("to")[0];
+
+  const m = dateStr.match(/(\d{2})-(\d{2})-(\d{4})/);
+  if (!m) return null;
+
+  return new Date(`${m[3]}-${m[2]}-${m[1]}`);
+}
+
+/* STATUS */
+function getPreviewStatus(dateStr) {
+  const date = parseDate(dateStr);
+  if (!date) return { text: "❌ Not Available", class: "text-red-400" };
+
+  const diff = (date - new Date()) / (1000*60*60*24);
+
+  if (diff < 0) return { text: "🟢 Available", class: "text-greenLight" };
+  if (diff <= 7) return { text: "🔥 Soon", class: "text-red-400" };
+  if (diff <= 30) return { text: "🟡 Upcoming", class: "text-yellow-400" };
+
+  return { text: "🟢 Planned", class: "text-greenDark" };
+}
+
+/* HERO */
+function renderHero(products) {
+  const valid = products
+    .map(([n,v]) => ({name:n,date:parseDate(v.nextGAReleaseDate),raw:v}))
+    .filter(p => p.date)
+    .sort((a,b)=>a.date-b.date);
+
+  if (valid.length) {
+    document.getElementById("heroText").innerHTML =
+      `<b>${valid[0].name}</b> goes live on <b>${valid[0].raw.nextGAReleaseDate}</b>`;
+  }
+}
+
+/* CARDS */
+function renderCards(products) {
+  const container = document.getElementById("cards");
+  container.innerHTML = "";
+
+  products.forEach(([name, v]) => {
+    const preview = getPreviewStatus(v.nextReleasePreviewAvailabilityDate);
+
+    const card = document.createElement("div");
+
+    const cardStyle = isDark
+      ? "bg-[#142b4d] border border-[#1f3b6d] text-slate-200"
+      : "bg-white border";
+
+    const badgeStyle = isDark
+      ? "bg-greenDark/30 text-greenLight"
+      : "bg-greenLight/20 text-greenDark";
+
+    card.className = `${cardStyle} rounded-2xl p-6 shadow hover:shadow-xl transition flex flex-col min-h-[200px]`;
+
+    card.innerHTML = `
+      <div>
+
+        <div class="flex justify-between mb-3">
+          <h2 class="font-semibold text-lg truncate">${name}</h2>
+          <span class="text-xs ${badgeStyle} px-2 py-1 rounded">
+            ${v.confidence}
+          </span>
+        </div>
+
+        <div class="grid grid-cols-4 gap-3 text-sm">
+
+          <div>
+            <div class="text-xs text-slate-300">Current</div>
+            <div class="font-medium truncate">${v.currentVersion}</div>
+          </div>
+
+          <div>
+            <div class="text-xs text-slate-300">Sandbox</div>
+            <div class="font-medium truncate">${v.sandboxVersion}</div>
+          </div>
+
+          <div>
+            <div class="text-xs text-slate-300">Preview</div>
+            <div class="font-medium ${preview.class} truncate">
+              ${v.nextReleasePreviewAvailabilityDate}
+            </div>
+          </div>
+
+          <div>
+            <div class="text-xs text-slate-300">GA</div>
+            <div class="font-semibold text-primary truncate">
+              ${v.nextGAReleaseDate}
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-2 text-xs ${preview.class}">
+          ${preview.text}
+        </div>
+
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+loadData();
+</script>
+
+</body>
+</html>

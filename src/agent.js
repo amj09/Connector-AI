@@ -243,7 +243,7 @@ async function runAgent() {
  
   console.log(`\n✅ output.json updated`);
  try {
-    await sendMail();   // ✅ wait for email
+    await sendMail();
     console.log("📧 Mail sent");
   } catch (err) {
     console.error("❌ Mail failed:", err.message);
