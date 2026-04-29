@@ -252,4 +252,6 @@ async function runAgent() {
   console.log(`📊 Summary: ${connectors.length - failed} succeeded, ${failed} rate-limited`);
 }
  
-runAgent();
+// runAgent();
+
+module.exports = { runAgent };

@@ -8,19 +8,21 @@ const { sendMail } = require("./mailer");
 
 const app = express();
 
-app.get("/index.html", (req, res) => {
-  // res.sendFile(path.join(__dirname, "public", "index.html"));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // Serve static files from "public"
-// app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("public"));
+
+// generated json response end-point
+app.get("/api/data", (req, res) => {
+  res.sendFile(path.join(__dirname, "output.json"));
+});
 
 // ✅ Cron job (India time)
-cron.schedule("0 9 * * 1", async () => {
-//cron.schedule("* * * * *", async () => { // every minute
+cron.schedule("0 11 * * *", async () => { // runs 11AM everyday
   try {
-    console.log("⏰ Running weekly job...");
-
     await runAgent();   // generates output.json
     await sendMail();   // sends email
 
