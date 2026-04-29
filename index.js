@@ -21,7 +21,8 @@ app.get("/api/data", (req, res) => {
 });
 
 // ✅ Cron job (India time)
-cron.schedule("0 11 * * *", async () => { // runs 11AM everyday
+// cron.schedule("0 11 * * *", async () => { // runs 11AM everyday
+cron.schedule("0 * * * *", async () => { // runs every hour
   try {
     await runAgent();   // generates output.json
     await sendMail();   // sends email

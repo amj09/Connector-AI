@@ -201,9 +201,9 @@ async function sendMail() {
 
   const sent_to_mails = [
     "aaz@clicklearn.com", 
-    // "sam@clicklearn.com", 
-    // "amj@clicklearn.com", 
-    // "pod@clicklearn.com"
+    "sam@clicklearn.com", 
+    "amj@clicklearn.com", 
+    "pod@clicklearn.com"
   ];
 
   const mailOptions = {
