@@ -1,5 +1,6 @@
 require("dotenv").config();
 const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 const fs = require("fs");
 const path = require("path");
 
@@ -14,11 +15,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.OUTLOOK_PASS,
   },
   */
-  // service: "gmail",
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  family: 4, // 👈 FORCE IPv4
+  service: "gmail",
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_PASS, // NOT your real password
@@ -212,24 +209,37 @@ async function sendMail() {
 
   const mailOptions = {
     /*
+    // OUTLOOK
     from: `"ERP Release System" <${process.env.OUTLOOK_USER}>`,
     to: process.env.MAIL_TO.split(","),
     subject: `ERP Release Report — ${outputData.lastUpdated}`,
     html: formatDataAsHtml(outputData),
     */
 
+    /*
+    // GMAIL
     from: `"ERP Release System" <${process.env.GMAIL_USER}>`,
+    to: sent_to_mails.join(','),
+    subject: `ERP Release Report — ${outputData.lastUpdated}`,
+    html: formatDataAsHtml(outputData),
+    */
+
+    // RESEND
+    from: `onboarding@resend.dev`,
     to: sent_to_mails.join(','),
     subject: `ERP Release Report — ${outputData.lastUpdated}`,
     html: formatDataAsHtml(outputData),
   };
 
   try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log('info: ', info);
-    console.log("✅ Email sent:", info.messageId);
+    // const info = await transporter.sendMail(mailOptions);
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const info = await resend.emails.send(mailOptions);
+    // console.log('info: ', info);
+    // console.log("✅ Email sent:", info.messageId);
   } catch (err) {
-    console.error("❌ Mail Error:", err);
+    console.error("❌ Mail Error:", err.message);
   }
 }
 

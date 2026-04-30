@@ -233,7 +233,7 @@ async function runAgent() {
   // Write output
   // ─────────────────────────────────────────────
   const finalOutput = {
-    lastUpdated: new Date().toISOString(),
+    lastUpdated: new Date().toISOString().split("T")[0],
     data: results,
   };
  
