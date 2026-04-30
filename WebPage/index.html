@@ -133,7 +133,7 @@ function renderHero(products) {
 
   if (valid.length) {
     document.getElementById("heroText").innerHTML =
-      `<b>${valid[0].name}</b> goes live on <b>${valid[0].raw.nextGAReleaseDate}</b>`;
+      `<b>${valid[0].name}</b> goes live on <b>${formatRange(valid[0].raw.nextGAReleaseDate)}</b>`;
   }
 }
 

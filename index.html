@@ -133,8 +133,25 @@ function renderHero(products) {
 
   if (valid.length) {
     document.getElementById("heroText").innerHTML =
-      `<b>${valid[0].name}</b> goes live on <b>${valid[0].raw.nextGAReleaseDate}</b>`;
+      `<b>${valid[0].name}</b> goes live on <b>${formatRange(valid[0].raw.nextGAReleaseDate)}</b>`;
   }
+}
+
+function formatDate(dateStr) {
+    var parts = dateStr.split('-');
+    var day = parts[0];
+    var month = parts[1];
+    var year = parts[2];
+
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    return day + " " + months[parseInt(month, 10) - 1] + " " + year;
+}
+
+function formatRange(rangeStr) {
+    var dates = rangeStr.split(' to ');
+    return formatDate(dates[0]) + " to " + formatDate(dates[1]);
 }
 
 /* CARDS */
@@ -187,7 +204,7 @@ function renderCards(products) {
           <div>
             <div class="text-xs text-slate-300">GA</div>
             <div class="font-semibold text-primary truncate">
-              ${v.nextGAReleaseDate}
+              ${formatRange(v.nextGAReleaseDate)}
             </div>
           </div>
 
