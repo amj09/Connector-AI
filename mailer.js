@@ -226,7 +226,7 @@ async function sendMail() {
 
     // RESEND
     from: `onboarding@resend.dev`,
-    to: sent_to_mails.join(','),
+    to: sent_to_mails,
     subject: `ERP Release Report — ${outputData.lastUpdated}`,
     html: formatDataAsHtml(outputData),
   };
