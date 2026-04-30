@@ -236,7 +236,7 @@ async function sendMail() {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
     const info = await resend.emails.send(mailOptions);
-    // console.log('info: ', info);
+    console.log('email-info: ', info);
     // console.log("✅ Email sent:", info.messageId);
   } catch (err) {
     console.error("❌ Mail Error:", err.message);
