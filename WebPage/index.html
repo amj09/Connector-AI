@@ -137,6 +137,23 @@ function renderHero(products) {
   }
 }
 
+function formatDate(dateStr) {
+    var parts = dateStr.split('-');
+    var day = parts[0];
+    var month = parts[1];
+    var year = parts[2];
+
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    return day + " " + months[parseInt(month, 10) - 1] + " " + year;
+}
+
+function formatRange(rangeStr) {
+    var dates = rangeStr.split(' to ');
+    return formatDate(dates[0]) + " to " + formatDate(dates[1]);
+}
+
 /* CARDS */
 function renderCards(products) {
   const container = document.getElementById("cards");
