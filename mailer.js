@@ -229,7 +229,7 @@ async function sendMail() {
     console.log('info: ', info);
     console.log("✅ Email sent:", info.messageId);
   } catch (err) {
-    console.error("❌ Error:", err.message);
+    console.error("❌ Mail Error:", err);
   }
 }
 
