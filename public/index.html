@@ -138,8 +138,11 @@ function renderHero(products) {
   }
 }
 function formatDate(dateStr) {
-  if (dateStr) {
+    if (!dateStr) return "";
+
     var parts = dateStr.split('-');
+    if (parts.length !== 3) return dateStr;
+
     var day = parts[0];
     var month = parts[1];
     var year = parts[2];
@@ -148,17 +151,18 @@ function formatDate(dateStr) {
                   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
     return day + " " + months[parseInt(month, 10) - 1] + " " + year;
-  }
-  return null;
-
 }
 
 function formatRange(rangeStr) {
-    var dates = rangeStr.split(' to ');
-    if (formatDate) {
-      return formatDate(dates[0]) + " to " + formatDate(dates[1]);
+    if (!rangeStr || rangeStr === "NOT_FOUND") return rangeStr;
+
+    var dates = rangeStr.split('to');
+
+    if (dates.length === 1) {
+        return formatDate(dates[0].trim());
     }
-    return null;
+
+    return formatDate(dates[0].trim()) + " to " + formatDate(dates[1].trim());
 }
 
 /* CARDS */
