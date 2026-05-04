@@ -183,7 +183,8 @@ function renderCards(products) {
       ? "bg-greenDark/30 text-greenLight"
       : "bg-greenLight/20 text-greenDark";
 
-    card.className = `${cardStyle} rounded-2xl p-6 shadow hover:shadow-xl transition flex flex-col min-h-[200px]`;
+    // card.className = `${cardStyle} rounded-2xl p-6 shadow hover:shadow-xl transition flex flex-col min-h-[200px]`;
+    card.className = `${cardStyle} rounded-2xl p-6 shadow hover:shadow-xl transition flex flex-col h-[220px]`;
 
     card.innerHTML = `
       <div>
@@ -214,7 +215,7 @@ function renderCards(products) {
 
           <div>
             <div class="text-xs text-slate-300">GA</div>
-            <div class="font-semibold text-primary truncate">
+            <<div class="font-semibold text-primary whitespace-normal">
               ${formatRange(v.nextGAReleaseDate)}
             </div>
           </div>
